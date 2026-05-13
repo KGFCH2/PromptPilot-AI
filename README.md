@@ -152,6 +152,8 @@ Edit `manifest.json` to customize:
 
 Contributions are welcome! Please feel free to submit issues and enhancement requests.
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for local setup, branch naming, PR checklist, and testing instructions.
+
 ## License
 
 MIT License - see LICENSE file for details
