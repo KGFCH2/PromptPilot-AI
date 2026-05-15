@@ -30,12 +30,5 @@ What actually happened instead. Include error messages if applicable.
 - **OS:** [e.g., Windows 10, macOS 13.5, Ubuntu 22.04]
 
 ## Console Error Logs
-```
+```text
 Paste any relevant console errors here (F12 > Console tab)
-```
-
-## Screenshots
-If applicable, add screenshots or screen recordings to help explain your problem.
-
-## Additional Context
-Any other context about the problem here.
