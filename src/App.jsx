@@ -373,6 +373,48 @@ function SettingsScreen({ onBack }) {
   );
 }
 
+
+function AnalyticsScreen({ analytics, onBack }) {
+  return (
+    <div style={{ padding: 20, color: "white" }}>
+      <button onClick={onBack}>← Back</button>
+
+      <h1>Prompt Analytics</h1>
+
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))",
+          gap: 16,
+          marginTop: 20,
+        }}
+      >
+        <div
+          style={{
+            background: "#1e1e2f",
+            padding: 20,
+            borderRadius: 12,
+          }}
+        >
+          <h2>Total Prompts</h2>
+          <p>{analytics.totalPrompts}</p>
+        </div>
+
+        <div
+          style={{
+            background: "#1e1e2f",
+            padding: 20,
+            borderRadius: 12,
+          }}
+        >
+          <h2>Favorites</h2>
+          <p>{analytics.favorites}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── History screen ───────────────────────────────────────────────────────────
 
 function HistoryScreen({ history, onSelect, onClear, onBack, searchQuery, setSearchQuery, showFavoritesOnly, setShowFavoritesOnly, toggleFavorite }) {
@@ -592,8 +634,16 @@ function HistoryScreen({ history, onSelect, onClear, onBack, searchQuery, setSea
 export default function App() {
   const [screen, setScreen] = useState('main');
   const [history, setHistory] = useState([]);
+ feature/prompt-analytics-dashboard
+  const [analytics, setAnalytics] = useState({
+    totalPrompts: 0,
+    favorites: 0,
+    categories: {},
+  });
+=======
   const [searchQuery, setSearchQuery] = useState('');
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
+ main
   const [prompts, setPrompts] = useState([]);
   const [selectedPrompt, setSelectedPrompt] = useState(null);
   const [compareVersion, setCompareVersion] = useState(null);
@@ -779,6 +829,11 @@ export default function App() {
           };
           const updated = [entry, ...history.slice(0, 49)];
           setHistory(updated);
+          setAnalytics((prev) => ({
+            ...prev,
+
+            totalPrompts: prev.totalPrompts + 1,
+          }));
           storage.set({ pp_history: updated });
         } catch (err) {
           console.error('Error saving version:', err);
@@ -896,6 +951,14 @@ export default function App() {
 
   if (screen === 'score-trends')
     return <ScoreTrends onBack={() => setScreen('main')} />;
+
+  if (screen === "analytics")
+    return (
+      <AnalyticsScreen
+        analytics={analytics}
+        onBack={() => setScreen("main")}
+      />
+    );
   
   if (screen === 'history')
     return (
@@ -1031,7 +1094,8 @@ export default function App() {
           </button>
           {[
             { icon: '📈', s: 'score-trends', title: 'Score Trends' },
-            { icon: '⟳', s: 'history', title: 'History' },
+            { icon: '◷', s: 'history', title: 'History' },
+            { icon: '📊', s: 'analytics', title: 'Analytics' },
             { icon: '⚙', s: 'settings', title: 'Settings' },
           ].map(({ icon, s, title }) => (
             <button
